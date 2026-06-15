@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SAINI VIP PANEL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{background:#020617;color:white;text-align:center;font-family:Arial;}
+button{padding:15px;margin:10px;width:90%;background:#0ea5e9;border:none;border-radius:10px;color:white;}
+</style>
+</head>
+<body>
+
+<h2>💎 SAINI PANEL</h2>
+
+<button onclick="ping()">🌐 Test Ping</button>
+<button onclick="ff()">🔥 Free Fire</button>
+
+<p id="status">Ready</p>
+
+<script>
+async function ping(){
+ let s=Date.now();
+ document.getElementById("status").innerText="Testing...";
+ try{
+  await fetch("https://1.1.1.1");
+  document.getElementById("status").innerText="Ping: "+(Date.now()-s)+" ms";
+ }catch{
+  document.getElementById("status").innerText="Failed";
+ }
+}
+
+function ff(){
+ location.href="https://apps.apple.com/in/app/free-fire-max/id1480516829";
+}
+</script>
+
+</body>
+</html>
