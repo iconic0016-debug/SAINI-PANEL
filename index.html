@@ -1,93 +1,76 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>SAINI VIP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#020617;
-  color:white;
-  text-align:center;
+Configuration</com.dts.freefireth~[Head Online]
+coding.xml
+config.xml
+file.xml
+<configuration>
+//update "Free Fire" script head online
+<configuration>
+rsistent
+#KeyHistory, 0
+#NoEnv
+#HotKeyInterval 1
+#MaxHotkeysPerInterval 127
+#InstallKeybdHook
+#UseHook
+#SingleInstance, Force
+SetKeyDelay,-1, 8
+SetControlDelay, -1
+SetMouseDelay, -1
+SetWinDelay,-1
+SendMode, InputThenPlay
+SetBatchLines,-1
+ListLines, Off
+CoordMode, Pixel, Screen, RGB
+CoordMode, Mouse, Screen
+PID := DllCall("GetCurrentProcessId")
+Process, Priority, %PID%, High
+EMCol := 0xaf0707
+ColVn := 99
+ZeroX := 999
+ZeroY := 999
+CFovX := 999
+CFovY := 999
+ScanL := ZeroX - 89
+ScanR := ZeroX + 99
+ScanT := ZeroY - 100
+ScanB := ZeroY + 999
+Loop, {
+~LButton::
+Start := A_TickCount
+while GetKeyState("LButton") && A_TickCount - Start < 150
+{
+PixelSearch, AimPixelX, AimPixelY, ScanL, ScanT, ScanR, ScanB, EMCol, ColVn, Fast
+RGB
+GoSub GetAimOffset
+GoSub GetAimMoves
+GoSub MouseMoves
 }
-
-h1{
-  color:#38bdf8;
-}
-
-.card{
-  background:#1e293b;
-  margin:15px;
-  padding:15px;
-  border-radius:15px;
-}
-
-button{
-  width:90%;
-  padding:14px;
-  margin:8px;
-  border:none;
-  border-radius:10px;
-  background:#0ea5e9;
-  color:white;
-  font-size:16px;
-}
-
-button:active{
-  transform:scale(0.96);
-}
-
-#status{
-  color:#94a3b8;
-}
-</style>
-</head>
-
-<body>
-
-<h1>VIP PANEL</h1>
-
-<div class="card">
-<button onclick="ping()">📶 Ping</button>
-<button onclick="boost()">⚡ Boost</button>
-<button onclick="ff()">🔥 Free Fire</button>
-</div>
-
-<div class="card">
-<p id="ip">Loading...</p>
-<p id="status">Ready</p>
-</div>
-
-<script>
-// IP
-fetch("https://api.ipify.org?format=json")
-.then(r=>r.json())
-.then(d=>document.getElementById("ip").innerText="IP: "+d.ip);
-
-// Ping
-async function ping(){
- let s=Date.now();
- document.getElementById("status").innerText="Testing...";
- try{
-  await fetch("https://1.1.1.1");
-  document.getElementById("status").innerText="Ping: "+(Date.now()-s)+" ms";
- }catch{
-  document.getElementById("status").innerText="Failed";
- }
-}
-
-// Boost
-function boost(){
- document.getElementById("status").innerText="Boost Activated ⚡";
-}
-
-// FF
-function ff(){
- location.href="https://apps.apple.com/in/app/free-fire-max/id1480516829";
-}
-</script>
-
-</body>
-</html>
+GetAimOffset:
+ AimX := AimPixelX - ZeroX
+ AimY := AimPixelY - ZeroY
+ AimY := AimPixelY+ 99 - ZeroY
+  If ( AimX > 0 ) {
+   DirX := 1
+  }
+  If ( AimX < 0 ) {
+DirX := -1 }
+  If ( AimY > 0 ) {
+   DirY := 1
+  }
+  If ( AimY < 0 ) {
+DirY := -1 }
+ AimOffsetX := AimX * DirX
+ AimOffsetY := AimY * DirY
+Return
+GetAimMoves:
+ RootX := Ceil(( AimOffsetX ** ( 1 / 1.3 )))
+ RootY := Ceil(( AimOffsetY ** ( 1 / 1.3 )))
+ MoveX := RootX * DirX
+ MoveY := RootY * DirY ;same here
+Return
+MouseMoves:
+ DllCall("mouse_event", uint, 1.75, int, MoveX * 1.45, int, MoveY * 1, uint, 0,
+int, 0)
+DllCall("Sleep", UInt, 0-50)
+return
+} return
